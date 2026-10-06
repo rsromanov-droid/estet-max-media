@@ -1,27 +1,66 @@
-name: Render PNG
-
+name: Render versioned MAX PNG
 on:
   push:
-    paths:
-      - 'render.svg'
-
+    branches: [main]
+    paths: ['render.svg']
+  pull_request:
+    paths: ['render.svg', '.github/workflows/render.yml']
+  workflow_dispatch:
 permissions:
   contents: write
-
+concurrency:
+  group: max-media-render
+  cancel-in-progress: false
 jobs:
   render:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Install SVG renderer
         run: sudo apt-get update && sudo apt-get install -y librsvg2-bin
-      - name: Render 4x5 PNG
-        run: rsvg-convert -w 1080 -h 1350 render.svg -o render.png
-      - name: Commit PNG
+      - name: Render immutable 4x5 PNG
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add render.png
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Render MAX image"
-          git push
+          mkdir -p "$RUNNER_TEMP/estet-media"
+          rsvg-convert -w 1080 -h 1350 render.svg -o "$RUNNER_TEMP/estet-media/render.png"
+          python3 - <<'PY'
+          import os, struct, json, hashlib
+          from pathlib import Path
+          p = Path(os.environ['RUNNER_TEMP'])/'estet-media/render.png'
+          data = p.read_bytes()
+          assert data[:8] == b'\x89PNG\r\n\x1a\n'
+          assert struct.unpack('>II', data[16:24]) == (1080, 1350)
+          p.with_suffix('.manifest.json').write_text(json.dumps({'source_commit':os.environ['GITHUB_SHA'], 'image_sha256':hashlib.sha256(data).hexdigest(), 'width':1080,'height':1350}, indent=2))
+          PY
+      - name: Commit versioned media and compatibility image
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git checkout -B main origin/main
+            mkdir -p posts
+            if test -f "posts/$GITHUB_SHA-render.png"; then
+              cmp "$RUNNER_TEMP/estet-media/render.png" "posts/$GITHUB_SHA-render.png"
+              exit 0
+            fi
+            cp "$RUNNER_TEMP/estet-media/render.png" "posts/$GITHUB_SHA-render.png"
+            cp "$RUNNER_TEMP/estet-media/render.manifest.json" "posts/$GITHUB_SHA-render.manifest.json"
+            cp "$RUNNER_TEMP/estet-media/render.png" render.png
+            git add render.png "posts/$GITHUB_SHA-render.png" "posts/$GITHUB_SHA-render.manifest.json"
+            git commit -m 'Render versioned MAX image'
+            if git push origin HEAD:main; then
+              media_commit=$(git rev-parse HEAD)
+              echo "Media: https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$media_commit/posts/$GITHUB_SHA-render.png" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          done
+          echo 'Could not commit media after three fast-forward attempts' >&2
+          exit 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: max-media-${{ github.run_id }}
+          path: ${{ runner.temp }}/estet-media/*
+          retention-days: 30
