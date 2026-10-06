@@ -1,24 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#071b18"/>
-      <stop offset="0.55" stop-color="#0c2f29"/>
-      <stop offset="1" stop-color="#050706"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="75%" cy="20%" r="70%">
-      <stop offset="0" stop-color="#c8a76a" stop-opacity=".34"/>
-      <stop offset="1" stop-color="#c8a76a" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="1080" height="1920" fill="url(#bg)"/>
-  <rect width="1080" height="1920" fill="url(#glow)"/>
-  <text x="90" y="180" font-family="Arial,Helvetica,sans-serif" font-size="34" fill="#d9c7a2" letter-spacing="6">ЭСТЕТ • НЕДВИЖИМОСТЬ</text>
-  <text x="90" y="820" font-family="Arial,Helvetica,sans-serif" font-size="82" font-weight="700" fill="#f3efe6">
-    <tspan x="90" dy="0">АВТОПОСТИНГ</tspan>
-    <tspan x="90" dy="110">С КАРТИНКОЙ</tspan>
-  </text>
-  <text x="90" y="1100" font-family="Arial,Helvetica,sans-serif" font-size="36" fill="#cdbf9f">Технический тест • 9:16</text>
-  <line x1="90" y1="1240" x2="990" y2="1240" stroke="#d9c7a2" stroke-opacity=".45"/>
-  <text x="90" y="1760" font-family="Arial,Helvetica,sans-serif" font-size="28" fill="#9da8a4">PROНедвижимость RnD</text>
-<!-- trigger -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#071713"/>
+    <stop offset="0.55" stop-color="#0b2b25"/>
+    <stop offset="1" stop-color="#11110f"/>
+  </linearGradient>
+  <radialGradient id="g1" cx="78%" cy="18%" r="72%">
+    <stop offset="0" stop-color="#d1ad69" stop-opacity=".28"/>
+    <stop offset="1" stop-color="#d1ad69" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="1080" height="1350" fill="url(#bg)"/>
+<rect width="1080" height="1350" fill="url(#g1)"/>
+<circle cx="865" cy="210" r="260" fill="none" stroke="#d4b06a" stroke-opacity=".12" stroke-width="2"/>
+<circle cx="865" cy="210" r="180" fill="none" stroke="#d4b06a" stroke-opacity=".10" stroke-width="2"/>
+<text x="76" y="150" font-family="Arial,Helvetica,sans-serif" font-size="30" letter-spacing="5" fill="#cbb88d">ПОДБОР НЕДВИЖИМОСТИ</text>
+<text x="76" y="355" font-family="Georgia,serif" font-size="92" font-weight="700" fill="#f6f0e4">
+  <tspan x="76" dy="0">КВАРТИРА</tspan>
+  <tspan x="76" dy="105">ПОД ВАШ</tspan>
+  <tspan x="76" dy="105">БЮДЖЕТ</tspan>
+</text>
+<line x1="76" y1="700" x2="1004" y2="700" stroke="#d0b06d" stroke-opacity=".42"/>
+<text x="76" y="785" font-family="Arial,Helvetica,sans-serif" font-size="36" fill="#efe6d4">Новостройки • Вторичка • Инвестиции</text>
+<text x="76" y="865" font-family="Arial,Helvetica,sans-serif" font-size="34" fill="#bfc8c3">Учитываем район, бюджет, платёж и цель покупки.</text>
+<rect x="76" y="965" width="928" height="170" rx="34" fill="#d4b06a"/>
+<text x="118" y="1036" font-family="Arial,Helvetica,sans-serif" font-size="30" fill="#0b211c">Хотите персональную подборку?</text>
+<text x="118" y="1092" font-family="Arial,Helvetica,sans-serif" font-size="44" font-weight="700" fill="#0b211c">НАЖМИТЕ «ПОДБОР»</text>
+<text x="76" y="1262" font-family="Arial,Helvetica,sans-serif" font-size="26" letter-spacing="2" fill="#8fa098">Без комиссии по новостройкам</text>
 </svg>
