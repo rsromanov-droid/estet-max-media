@@ -2,7 +2,7 @@ name: Render versioned MAX PNG
 on:
   push:
     branches: [main]
-    paths: ['render.svg']
+    paths: ['render.svg', '.github/workflows/render.yml']
   pull_request:
     paths: ['render.svg', '.github/workflows/render.yml']
   workflow_dispatch:
