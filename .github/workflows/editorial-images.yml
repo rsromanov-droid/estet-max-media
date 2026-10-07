@@ -30,6 +30,9 @@ jobs:
               fingerprint = hashlib.sha256(data).hexdigest()
               if output.exists():
                   assert manifest.exists() and json.loads(manifest.read_text())['source_sha256'] == fingerprint
+                  metadata = json.loads(manifest.read_text())
+                  metadata['pixel_sha256'] = hashlib.sha256(Image.open(output).convert('RGB').tobytes()).hexdigest()
+                  manifest.write_text(json.dumps(metadata, indent=2))
                   continue
               image = Image.open(source).convert('RGB')
               final = ImageOps.pad(image, (1080,1350), method=Image.Resampling.LANCZOS, color='#102d2c')
