@@ -3,5 +3,6 @@
   "image_sha256": "ddab505cc8620bd2a5901692e4b237133903a8d70cdd761d9c6f51a6fb9914a8",
   "width": 1080,
   "height": 1350,
-  "method": "fit_complete_original_no_crop"
+  "method": "fit_complete_original_no_crop",
+  "pixel_sha256": "affd47d3d013a34c818de900058ab3a8176034c933970dbc9f60c1d8c03d1e71"
 }
